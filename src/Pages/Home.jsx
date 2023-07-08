@@ -1,11 +1,10 @@
 import React from "react";
-import Navbar from "../components/Navbar/Navbar"
-import FilesUp from "../components/DocumentUploadForm";
-
+import Navbar from "../Components/Navbar/Navbar";
+import FilesUp from "../Components/DocumentUploadForm"
 function Home() {
   return (
     <div>
-      <Navbar />
+      <Navbar/>
       <FilesUp />
     </div>
   );
