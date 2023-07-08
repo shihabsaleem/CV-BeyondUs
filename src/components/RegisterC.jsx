@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { GoogleLogin, GoogleOAuthProvider } from "@moeindana/google-oauth";
 import { Button, Container, TextField, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import "../Styles/login.scss"
+import "../Styles/login.scss";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -47,7 +47,8 @@ const Register = () => {
         User Registration
       </Typography>
       <form onSubmit={handleFormSubmit} sx={{ width: "100%", marginTop: 1 }}>
-        <TextField className="roundcorner"
+        <TextField
+          className="roundcorner"
           label="Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
@@ -55,7 +56,8 @@ const Register = () => {
           fullWidth
           margin="normal"
         />
-        <TextField className="roundcorner"
+        <TextField
+          className="roundcorner"
           type="email"
           label="Email"
           value={email}
@@ -64,7 +66,8 @@ const Register = () => {
           fullWidth
           margin="normal"
         />
-        <TextField className="roundcorner"
+        <TextField
+          className="roundcorner"
           type="password"
           label="Password"
           value={password}
@@ -73,7 +76,12 @@ const Register = () => {
           fullWidth
           margin="normal"
         />
-        <Button  className="roundcorner" type="submit" variant="contained" fullWidth>
+        <Button
+          className="roundcorner"
+          type="submit"
+          variant="contained"
+          fullWidth
+        >
           Register
         </Button>
       </form>
