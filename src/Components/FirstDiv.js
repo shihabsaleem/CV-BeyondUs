@@ -1,5 +1,5 @@
 import React from 'react'
-import '../Styles/FirstDiv.css'
+import '../Styles/firstdiv.css'
 const FirstDiv = () => {
   return (
     <div className='firstdiv'>
