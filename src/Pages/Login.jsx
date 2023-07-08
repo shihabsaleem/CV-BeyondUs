@@ -58,5 +58,4 @@ const Login = () => {
     </GoogleOAuthProvider>
   );
 };
-
 export default Login;
