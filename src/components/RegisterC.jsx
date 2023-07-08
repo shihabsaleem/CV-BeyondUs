@@ -13,7 +13,7 @@ const RegisterC = () => {
   const handleSuccess = (response) => {
     console.log(response);
     // Handle successful authentication with Google
-    navigate("/dashboard"); // Redirect to the dashboard or desired page
+    navigate("/"); // Redirect to the dashboard or desired page
   };
 
   const handleError = () => {
@@ -30,7 +30,7 @@ const RegisterC = () => {
     console.log("Email:", email);
     console.log("Password:", password);
 
-    navigate("/dashboard"); // Redirect to the dashboard or desired page
+    navigate("/"); // Redirect to the dashboard or desired page
   };
 
   return (
@@ -88,7 +88,7 @@ const RegisterC = () => {
       <Typography variant="body1" sx={{ marginTop: 2 }}>
         Or register with Google
       </Typography>
-      <GoogleOAuthProvider clientId="933928110298-3qbsnc8et2do0j4bm78cjgt0so9bo154.apps.googleusercontent.com">
+      <GoogleOAuthProvider clientId="427419733171-d9gecl9ba5o96ue6den4o3igam4f2d44.apps.googleusercontent.com">
         <GoogleLogin onSuccess={handleSuccess} onError={handleError}>
           <Button variant="contained" fullWidth>
             Register with Google

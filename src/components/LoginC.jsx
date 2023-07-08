@@ -144,7 +144,7 @@ const Login = () => {
             <Typography variant="body1" sx={{ mt: 2 }}>
               Or
             </Typography>
-            <GoogleOAuthProvider clientId="933928110298-3qbsnc8et2do0j4bm78cjgt0so9bo154.apps.googleusercontent.com">
+            <GoogleOAuthProvider clientId="427419733171-d9gecl9ba5o96ue6den4o3igam4f2d44.apps.googleusercontent.com">
               <GoogleLogin
                 onSuccess={handleGoogleSuccess}
                 onError={handleGoogleError}
