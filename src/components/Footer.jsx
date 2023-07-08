@@ -1,5 +1,5 @@
 import React from "react";
-import "./footer.css";
+import "../Styles/footer.scss";
 const Footer = () => {
   return (
     <div className="footer">
@@ -29,6 +29,7 @@ const Footer = () => {
           <p>© 2023, Bold Limited. All rights reserved.</p>
         </li>
       </ul>
+
     </div>
   );
 };

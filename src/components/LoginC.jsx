@@ -2,26 +2,37 @@ import React, { useState } from "react";
 import { GoogleLogin, GoogleOAuthProvider } from "@moeindana/google-oauth";
 import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
-import { Button, Container, TextField, Typography } from "@mui/material";
-import "../Styles/login.scss";
+import {
+  Avatar,
+  Button,
+  Container,
+  CssBaseline,
+  FormControlLabel,
+  Grid,
+  Link,
+  Paper,
+  TextField,
+  Typography,
+  Checkbox,
+} from "@mui/material";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+
+const defaultTheme = createTheme();
+
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSuccess = (response) => {
-    console.log(response);
-    var decoded = jwt_decode(response.credential);
-    navigate("/");
-    console.log(decoded);
-  };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    console.log({
+      email: data.get("email"),
+      password: data.get("password"),
+    });
 
-  const handleError = () => {
-    console.log("Login Failed");
-  };
-
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
     // Handle login form submission here
     // You can use the 'email' and 'password' state values to perform authentication
 
@@ -33,53 +44,120 @@ const Login = () => {
     }
   };
 
+  const handleGoogleSuccess = (response) => {
+    console.log(response);
+    var decoded = jwt_decode(response.credential);
+    navigate("/");
+    console.log(decoded);
+  };
+
+  const handleGoogleError = () => {
+    console.log("Login Failed");
+  };
+
   return (
-    <Container
-      maxWidth="xs"
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        marginTop: 8,
-      }}
-    >
-      <Typography variant="h4" component="h1" gutterBottom>
-        Login
-      </Typography>
-      <form onSubmit={handleFormSubmit} sx={{ width: "100%", marginTop: 1 }}>
-        <TextField
-          type="email"
-          label="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          fullWidth
-          margin="normal"
-        />
-        <TextField
-          type="password"
-          label="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          fullWidth
-          margin="normal"
-        />
-        <Button type="submit" variant="contained" fullWidth>
-          Login
-        </Button>
-      </form>
-      <Typography variant="body1" sx={{ marginTop: 2 }}>
-        Or
-      </Typography>
-      <GoogleOAuthProvider clientId="933928110298-3qbsnc8et2do0j4bm78cjgt0so9bo154.apps.googleusercontent.com">
-        <GoogleLogin onSuccess={handleSuccess} onError={handleError}>
-          <Button variant="contained" fullWidth>
-            Login with Google
-          </Button>
-        </GoogleLogin>
-      </GoogleOAuthProvider>
-    </Container>
+    <ThemeProvider theme={defaultTheme}>
+      <Grid container component="main" sx={{ height: "100vh" }}>
+        <CssBaseline />
+        <Grid item xs={false} sm={4} md={7}>
+          <Paper
+            sx={{
+              backgroundImage:
+                "url(https://source.unsplash.com/random?wallpapers)",
+              backgroundRepeat: "no-repeat",
+              backgroundColor: (t) =>
+                t.palette.mode === "light"
+                  ? t.palette.grey[50]
+                  : t.palette.grey[900],
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              height: "100%",
+            }}
+          />
+        </Grid>
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+          <Container
+            sx={{
+              my: 8,
+              mx: 4,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Sign in
+            </Typography>
+            <form onSubmit={handleSubmit} sx={{ mt: 1 }}>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                autoFocus
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <FormControlLabel
+                control={<Checkbox value="remember" color="primary" />}
+                label="Remember me"
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Sign In
+              </Button>
+              <Grid container>
+                <Grid item xs>
+                  <Link href="#" variant="body2">
+                    Forgot password?
+                  </Link>
+                </Grid>
+                <Grid item>
+                  <Link href="#" variant="body2">
+                    {"Sign Up"}
+                  </Link>
+                </Grid>
+              </Grid>
+            </form>
+            <Typography variant="body1" sx={{ mt: 2 }}>
+              Or
+            </Typography>
+            <GoogleOAuthProvider clientId="933928110298-3qbsnc8et2do0j4bm78cjgt0so9bo154.apps.googleusercontent.com">
+              <GoogleLogin
+                onSuccess={handleGoogleSuccess}
+                onError={handleGoogleError}
+              >
+                <Button variant="contained" fullWidth>
+                  Login with Google
+                </Button>
+              </GoogleLogin>
+            </GoogleOAuthProvider>
+          </Container>
+        </Grid>
+      </Grid>
+    </ThemeProvider>
   );
 };
 
