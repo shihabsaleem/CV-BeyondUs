@@ -38,7 +38,7 @@ const DocumentUploadForm = () => {
     <Card variant="outlined" className="document-upload-card">
       <CardContent>
         <Typography variant="h5" component="h2" gutterBottom>
-          Upload a Document
+          Validate Resume
         </Typography>
         <form onSubmit={handleSubmit}>
           <input
