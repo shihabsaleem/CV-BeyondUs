@@ -23,7 +23,7 @@ const Footer = () => {
         }}
       >
         <Box component="li" sx={{ mx: 2 }}>
-          <Link href="/terms_and_conditions" color="inherit">
+          <Link href="/" color="inherit">
             Terms and Conditions
           </Link>
         </Box>
@@ -33,17 +33,17 @@ const Footer = () => {
           </Link>
         </Box>
         <Box component="li" sx={{ mx: 2 }}>
-          <Link href="/support" color="inherit">
+          <Link href="/" color="inherit">
             Support
           </Link>
         </Box>
         <Box component="li" sx={{ mx: 2 }}>
-          <Link href="/faq" color="inherit">
+          <Link href="/" color="inherit">
             FAQ
           </Link>
         </Box>
         <Box component="li" sx={{ mx: 2 }}>
-          <Link href="/contact" color="inherit">
+          <Link href="/" color="inherit">
             Contact Us
           </Link>
         </Box>
