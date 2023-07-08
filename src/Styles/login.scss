@@ -1,0 +1,33 @@
+// Login.scss
+
+// Variables
+$primaryColor: #007bff;
+$inputPadding: 10px;
+$buttonPadding: 10px 20px;
+
+// Styles
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 100px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+input {
+    padding: $inputPadding;
+    margin-bottom: 10px;
+}
+
+button {
+    padding: $buttonPadding;
+    background-color: $primaryColor;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
