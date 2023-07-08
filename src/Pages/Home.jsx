@@ -1,12 +1,12 @@
 import React from "react";
-import Navbar from "../Components/Navbar";
-import FirstDiv from "../Components/FirstDiv";
+import Navbar from "../components/Navbar/Navbar"
+import FilesUp from "../components/DocumentUploadForm";
 
 function Home() {
   return (
     <div>
-      <Navbar/>
-      <FirstDiv/>
+      <Navbar />
+      <FilesUp />
     </div>
   );
 }
