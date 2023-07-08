@@ -4,6 +4,7 @@ import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import { Button, Container, TextField, Typography } from "@mui/material";
 import "../Styles/login.scss";
+// import Navbar from "../Components/Navbar/Navbar";
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -34,6 +35,7 @@ const Login = () => {
   };
 
   return (
+  
     <Container
       maxWidth="xs"
       sx={{
