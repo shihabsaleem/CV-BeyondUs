@@ -1,36 +1,63 @@
 import React from "react";
-import "../Styles/footer.scss";
+import { Box, Link, Typography } from "@mui/material";
+
 const Footer = () => {
   return (
-    <div className="footer">
-      <ul className="list1">
-        <li>
-          <a href="terms_and_conditions">Terms and Conditions</a>
-        </li>
+    <Box
+      component="footer"
+      sx={{
+        backgroundColor: "#f5f5f5",
+        py: 2,
+        position: "fixed",
+        bottom: 0,
+        left: 0,
+        width: "100%",
+        textAlign: "center",
+      }}
+    >
+      <Box
+        component="ul"
+        sx={{
+          listStyle: "none",
+          p: 0,
+          m: 0,
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <Box component="li" sx={{ mx: 2 }}>
+          <Link href="/terms_and_conditions" color="inherit">
+            Terms and Conditions
+          </Link>
+        </Box>
+        <Box component="li" sx={{ mx: 2 }}>
+          <Link href="/reviews" color="inherit">
+            Reviews
+          </Link>
+        </Box>
+        <Box component="li" sx={{ mx: 2 }}>
+          <Link href="/support" color="inherit">
+            Support
+          </Link>
+        </Box>
+        <Box component="li" sx={{ mx: 2 }}>
+          <Link href="/faq" color="inherit">
+            FAQ
+          </Link>
+        </Box>
+        <Box component="li" sx={{ mx: 2 }}>
+          <Link href="/contact" color="inherit">
+            Contact Us
+          </Link>
+        </Box>
+      </Box>
 
-        <li>
-          <a href="/reviews">Reviews</a>
-        </li>
-        <li>
-          <a href="/support">Support</a>
-        </li>
-
-        {/* <ul className="list2"> */}
-        <li>
-          <a href="/faq">FAQ</a>
-        </li>
-        <li>
-          <a href="/contact-us">Contact Us</a>
-        </li>
-      </ul>
-
-      <ul className="list3">
-        <li>
-          <p>© 2023, Bold Limited. All rights reserved.</p>
-        </li>
-      </ul>
-
-    </div>
+      <Box mt={2}>
+        <Typography variant="body2" color="text.secondary">
+          &copy; {new Date().getFullYear()}, PwNΞvΞrY7h1nG. All rights reserved.
+        </Typography>
+      </Box>
+    </Box>
   );
 };
 

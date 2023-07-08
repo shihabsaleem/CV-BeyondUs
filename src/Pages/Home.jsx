@@ -1,15 +1,23 @@
 import React from "react";
-import Navbar from "../Components/Navbar"
-import FilesUp from "../Components/DocumentUploadForm";
-import Footer from "../Components/Footer"
+import Navbar from "../components/Navbar";
+import FilesUp from "../components/DocumentUploadForm";
+import Detailed from "../components/Detailed";
+import Footer from "../components/Footer";
+import "../Styles/home.scss";
 
 function Home() {
   return (
     <div>
-      <Navbar/>
-      <FilesUp />
-      <Footer/>
-      
+      <Navbar />
+      <div className="container">
+        <div className="left">
+          <FilesUp />
+        </div>
+        <div className="right">
+          <Detailed />
+        </div>
+      </div>
+      <Footer />
     </div>
   );
 }

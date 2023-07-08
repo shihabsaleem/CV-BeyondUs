@@ -1,6 +1,6 @@
 import React from "react";
-import Navbar from "../Components/Navbar";
-import RegisterC from "../Components/RegisterC";
+import Navbar from "../components/Navbar";
+import RegisterC from "../components/RegisterC";
 function Register() {
   return (
     <div>

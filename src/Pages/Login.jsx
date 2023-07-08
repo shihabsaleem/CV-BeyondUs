@@ -1,14 +1,13 @@
 import React from "react";
-import Navbar from "../Components/Navbar";
-import LoginC from "../Components/LoginC";
+import Navbar from "../components/Navbar";
+import LoginC from "../components/LoginC";
 function Login() {
   return (
     <div>
-<Navbar/>
-<LoginC/>
-
+      <Navbar />
+      <LoginC />
     </div>
-  )
+  );
 }
 
-export default Login
+export default Login;
