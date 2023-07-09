@@ -53,7 +53,7 @@ function Navbar() {
           </MenuItem>
         </Menu>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          CV Parser
+          CV Wizard
         </Typography>
       </Toolbar>
     </AppBar>
