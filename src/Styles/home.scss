@@ -1,0 +1,20 @@
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+.left {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.right {
+    flex: 1;
+    padding: 30px;
+    float: left;
+    width: 1000px;
+    overflow-y: auto;
+    height: 500px;
+}
