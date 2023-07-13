@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { GoogleLogin, GoogleOAuthProvider } from "@moeindana/google-oauth";
+import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import {
@@ -10,13 +10,16 @@ import {
   FormControlLabel,
   Grid,
   Link,
-  Paper,
   TextField,
   Typography,
   Checkbox,
+  Snackbar,
+  Alert,
+  Paper,
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { GoogleLogin, GoogleOAuthProvider } from "@moeindana/google-oauth";
 
 const defaultTheme = createTheme();
 
@@ -24,35 +27,58 @@ const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-
-    // Handle login form submission here
-    // You can use the 'email' and 'password' state values to perform authentication
-
-    // Example:
-    if (email === "example@example.com" && password === "password") {
-      navigate("/");
-    } else {
-      console.log("Login Failed");
+    try {
+      const response = await axios.post("http://127.0.0.1:5000/login", {
+        email,
+        password,
+      });
+      const user = response.data;
+      console.log(user);
+      setShowAlert(true);
+      setAlertMessage("Login successful");
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
+     } catch (error) {
+      console.log(error);
+      setShowAlert(true);
+      setAlertMessage("Login failed");
     }
   };
 
-  const handleGoogleSuccess = (response) => {
-    console.log(response);
-    var decoded = jwt_decode(response.credential);
-    navigate("/");
-    console.log(decoded);
+  const handleAlertClose = () => {
+    setShowAlert(false);
+    setAlertMessage("");
   };
 
-  const handleGoogleError = () => {
-    console.log("Login Failed");
+  const handleGoogleSuccess = async (response) => {
+    console.log(response);
+    const { tokenId } = response;
+    const { email } = response;
+    const password = tokenId; // Use the Google authentication token as the password
+
+    try {
+      const loginResponse = await axios.post("http://127.0.0.1:5000/login", {
+        email,
+        password,
+      });
+      const user = loginResponse.data;
+      console.log(user);
+      setShowAlert(true);
+      setAlertMessage("Login successful");
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
+    } catch (error) {
+      console.log(error);
+      setShowAlert(true);
+      setAlertMessage("Login failed");
+    }
   };
 
   return (
@@ -91,7 +117,7 @@ const Login = () => {
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-            <form onSubmit={handleSubmit} sx={{ mt: 1 }}>
+            <form onSubmit={handleSubmit}>
               <TextField
                 margin="normal"
                 required
@@ -128,32 +154,43 @@ const Login = () => {
               >
                 Sign In
               </Button>
-              <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link href="#" variant="body2">
-                    {"Sign Up"}
-                  </Link>
-                </Grid>
-              </Grid>
             </form>
             <Typography variant="body1" sx={{ mt: 2 }}>
               Or
             </Typography>
-            <GoogleOAuthProvider clientId="427419733171-d9gecl9ba5o96ue6den4o3igam4f2d44.apps.googleusercontent.com">
-              <GoogleLogin
-                onSuccess={handleGoogleSuccess}
-                onError={handleGoogleError}
-              >
+            <GoogleOAuthProvider clientId="585823466341-qb1dngvv98l4tjj4ml4vom3bkcv3du2a.apps.googleusercontent.com">
+              <GoogleLogin onSuccess={handleGoogleSuccess}>
                 <Button variant="contained" fullWidth>
                   Login with Google
                 </Button>
+                <Grid container>
+                  <Grid item xs>
+                    <Link href="#" variant="body2">
+                      Forgot password?
+                    </Link>
+                  </Grid>
+                  <Grid item>
+                    <Link href={"register"} variant="body2">
+                      {"Sign Up"}
+                    </Link>
+                  </Grid>
+                </Grid>
               </GoogleLogin>
             </GoogleOAuthProvider>
+            <Snackbar
+              open={showAlert}
+              autoHideDuration={4000}
+              onClose={handleAlertClose}
+            >
+              <Alert
+                onClose={handleAlertClose}
+                severity={
+                  alertMessage.includes("successful") ? "success" : "error"
+                }
+              >
+                {alertMessage}
+              </Alert>
+            </Snackbar>
           </Container>
         </Grid>
       </Grid>
