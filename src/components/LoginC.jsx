@@ -1,7 +1,4 @@
-import React, { useState } from "react";
-import axios from "axios";
-import jwt_decode from "jwt-decode";
-import { useNavigate } from "react-router-dom";
+import React, {useEffect} from 'react';
 import {
   Avatar,
   Button,
@@ -9,7 +6,6 @@ import {
   CssBaseline,
   FormControlLabel,
   Grid,
-  Link,
   TextField,
   Typography,
   Checkbox,
@@ -17,69 +13,25 @@ import {
   Alert,
   Paper,
 } from "@mui/material";
+import { Link } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import { GoogleLogin, GoogleOAuthProvider } from "@moeindana/google-oauth";
+import { useAuth } from '../contexts/AuthContext';
 
 const defaultTheme = createTheme();
 
 const Login = () => {
+
+  const { setEmail, setPassword, handleSignIn, authUser} = useAuth();
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [showAlert, setShowAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState("");
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    try {
-      const response = await axios.post("http://127.0.0.1:5000/login", {
-        email,
-        password,
-      });
-      const user = response.data;
-      console.log(user);
-      setShowAlert(true);
-      setAlertMessage("Login successful");
-      setTimeout(() => {
-        navigate("/");
-      }, 2000);
-     } catch (error) {
-      console.log(error);
-      setShowAlert(true);
-      setAlertMessage("Login failed");
+  useEffect(() => {
+    if(authUser != null) {
+      navigate('/')
     }
-  };
+  }, [authUser, navigate])
 
-  const handleAlertClose = () => {
-    setShowAlert(false);
-    setAlertMessage("");
-  };
-
-  const handleGoogleSuccess = async (response) => {
-    console.log(response);
-    const { tokenId } = response;
-    const { email } = response;
-    const password = tokenId; // Use the Google authentication token as the password
-
-    try {
-      const loginResponse = await axios.post("http://127.0.0.1:5000/login", {
-        email,
-        password,
-      });
-      const user = loginResponse.data;
-      console.log(user);
-      setShowAlert(true);
-      setAlertMessage("Login successful");
-      setTimeout(() => {
-        navigate("/");
-      }, 2000);
-    } catch (error) {
-      console.log(error);
-      setShowAlert(true);
-      setAlertMessage("Login failed");
-    }
-  };
+  
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -117,7 +69,7 @@ const Login = () => {
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSignIn}>
               <TextField
                 margin="normal"
                 required
@@ -127,7 +79,6 @@ const Login = () => {
                 name="email"
                 autoComplete="email"
                 autoFocus
-                value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
               <TextField
@@ -139,7 +90,6 @@ const Login = () => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
               <FormControlLabel
@@ -155,29 +105,19 @@ const Login = () => {
                 Sign In
               </Button>
             </form>
-            <Typography variant="body1" sx={{ mt: 2 }}>
-              Or
+            <Typography>
+              Click here to  <Link
+                style={{'color': 'blue'}}
+                to={{
+                  pathname: "/register",
+                  state: { foo: "bar" },
+                }}
+              >
+                register
+              </Link>
             </Typography>
-            <GoogleOAuthProvider clientId="585823466341-qb1dngvv98l4tjj4ml4vom3bkcv3du2a.apps.googleusercontent.com">
-              <GoogleLogin onSuccess={handleGoogleSuccess}>
-                <Button variant="contained" fullWidth>
-                  Login with Google
-                </Button>
-                <Grid container>
-                  <Grid item xs>
-                    <Link href="#" variant="body2">
-                      Forgot password?
-                    </Link>
-                  </Grid>
-                  <Grid item>
-                    <Link href={"register"} variant="body2">
-                      {"Sign Up"}
-                    </Link>
-                  </Grid>
-                </Grid>
-              </GoogleLogin>
-            </GoogleOAuthProvider>
-            <Snackbar
+           
+            {/* <Snackbar
               open={showAlert}
               autoHideDuration={4000}
               onClose={handleAlertClose}
@@ -190,7 +130,7 @@ const Login = () => {
               >
                 {alertMessage}
               </Alert>
-            </Snackbar>
+            </Snackbar> */}
           </Container>
         </Grid>
       </Grid>

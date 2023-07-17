@@ -8,6 +8,7 @@
     "@moeindana/google-oauth": "^0.1.5",
     "@mui/icons-material": "^5.13.7",
     "@mui/material": "^5.13.7",
+    "@ramonak/react-progress-bar": "^5.0.3",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -16,6 +17,8 @@
     "cheerio": "^1.0.0-rc.12",
     "cors": "^2.8.5",
     "file-saver": "^2.0.5",
+    "firebase": "^10.0.0",
+    "jspdf": "^2.5.1",
     "jwt-decode": "^3.1.2",
     "mammoth": "^1.6.0",
     "path-browserify": "^1.0.1",
@@ -54,5 +57,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "prettier": "^3.0.0"
   }
 }

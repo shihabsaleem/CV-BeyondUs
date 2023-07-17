@@ -1,50 +1,27 @@
-import React, { useState } from "react";
+import React from "react";
 import { Card, CardContent, Typography, Button } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Detailed from "./Detailed";
-import "./DocumentUploadForm.css";
+import "../Styles/DocumentUploadForm.css";
 import "../Styles/home.scss";
+import { useDocumentFetch } from "../contexts/DocumentFetchContext";
 
 const DocumentUploadForm = () => {
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [parsedData, setParsedData] = useState(null);
+  const {setSelectedFile, handleFileUpload, parsedData, selectedFile} = useDocumentFetch()
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    if (selectedFile) {
-      console.log("Uploading file:", selectedFile);
-      const formData = new FormData();
-      formData.append("resume", selectedFile);
-      try {
-        const response = await fetch("http://localhost:5000/extract_resume", {
-          method: "POST",
-          body: formData,
-        });
-        if (response.ok) {
-          const data = await response.json();
-          console.log("Resume data:", data);
-          setParsedData(data); // Set the parsed data in state
-          window.alert("Upload complete!"); // Display an alert when upload is complete
-        } else {
-          console.error("Failed to extract resume data");
-        }
-      } catch (error) {
-        console.error("Error during resume extraction:", error);
-      }
-    }
-  };
 
   return (
+    <div className="center-upload-form">
     <Card variant="outlined" className="document-upload-card">
       <CardContent>
-        <Typography variant="h5" component="h2" gutterBottom>
-          Validate Resume
+        <Typography variant="h5" component="h2" gutterBottom style={{"padding":"40px"}}>
+          Upload Resume
         </Typography>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleFileUpload}>
           <input
             type="file"
             accept=".pdf,.doc,.docx"
@@ -62,7 +39,7 @@ const DocumentUploadForm = () => {
             </Button>
           </label>
           {selectedFile && (
-            <Typography variant="body1" gutterBottom>
+            <Typography variant="body1" gutterBottom style={{"padding":"10px"}}>
               Selected File: {selectedFile.name}
             </Typography>
           )}
@@ -72,6 +49,7 @@ const DocumentUploadForm = () => {
             variant="contained"
             disabled={!selectedFile}
             startIcon={<CloudUploadIcon />}
+            style={{"marginTop":"30px"}}
           >
             Upload
           </Button>
@@ -82,6 +60,11 @@ const DocumentUploadForm = () => {
         <Detailed data={parsedData} />
       </div>} {/* Render the Detailed component when parsedData is available */}
     </Card>
+    <div className="paragraph">
+      <p>Upload your resume and we will parse it for you.</p>
+      <p>Then you can view your resume in a more readable format.</p>
+    </div>
+    </div>
   );
 };
 

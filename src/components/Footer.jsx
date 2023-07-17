@@ -1,8 +1,10 @@
 import React from "react";
 import { Box, Link, Typography } from "@mui/material";
+import '../Styles/home.scss'
 
 const Footer = () => {
   return (
+    <div className="footer-bottom">
     <Box
       component="footer"
       sx={{
@@ -55,6 +57,7 @@ const Footer = () => {
         </Typography>
       </Box>
     </Box>
+    </div>
   );
 };
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -7,30 +7,14 @@ import {
   Menu,
   MenuItem,
 } from "@mui/material";
+import { Link } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useAuth } from "../contexts/AuthContext";
+import "../Styles/navbar.scss";
 
 function Navbar() {
-  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
-  const [currentUser, setCurrentUser] = useState("");
-
-  useEffect(() => {
-    // Fetch the current user's name from the backend
-    fetchCurrentUser();
-  }, []);
-
-  const fetchCurrentUser = async () => {
-    try {
-      const response = await axios.get("http://127.0.0.1:5000/user");
-      const user = response.data;
-      console.log(user);
-      setCurrentUser(user.name);
-    } catch (error) {
-      console.error("Failed to fetch current user", error);
-    }
-  };
+  const { authUser, handleSignOut } = useAuth();
 
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -40,17 +24,8 @@ function Navbar() {
     setAnchorEl(null);
   };
 
-  const handleLogout = async () => {
-    try {
-      await axios.get("http://127.0.0.1:5000/logout");
-      setCurrentUser("");
-      navigate("/login");
-    } catch (error) {
-      console.error("Logout failed", error);
-    }
-  };
-
   return (
+    <div className="navbar">
     <AppBar position="static">
       <Toolbar>
         <IconButton
@@ -71,25 +46,28 @@ function Navbar() {
           open={Boolean(anchorEl)}
           onClose={handleMenuClose}
         >
-          <MenuItem onClick={handleMenuClose} component={Link} to="/">
+          {authUser && <MenuItem onClick={handleMenuClose} component={Link} to="/">
             Home
-          </MenuItem>
-          <MenuItem onClick={handleMenuClose} component={Link} to="/login">
+          </MenuItem>}
+          {!authUser && [
+          <MenuItem onClick={handleMenuClose} component={Link} to="/login" key={1}>
             Login
-          </MenuItem>
-          <MenuItem onClick={handleMenuClose} component={Link} to="/register">
+          </MenuItem>,
+          <MenuItem onClick={handleMenuClose} component={Link} to="/register" key={2}>
             Register
-          </MenuItem>
-          <MenuItem onClick={handleLogout}>Logout</MenuItem>
+          </MenuItem>]
+          }
+          {authUser && <MenuItem onClick={handleSignOut}>Logout</MenuItem>}
         </Menu>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           CV Wizard
         </Typography>
         <Typography variant="body2" component="div">
-          Logged in as: {currentUser}
+          {authUser ? authUser.email : ""}
         </Typography>
       </Toolbar>
     </AppBar>
+    </div>
   );
 }
 

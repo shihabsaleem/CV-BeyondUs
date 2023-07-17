@@ -6,6 +6,7 @@
     border-radius: 4px;
     background-color: #331dd7;
   }
+
   
   h2 {
     text-align: center;
@@ -35,4 +36,10 @@
   button:hover {
     background-color: #267ae9;
   }
+
+  .paragraph {
+    font-size: 20px;
+    text-align: center;
+  }
+
   
